@@ -1,4 +1,4 @@
-window.game3 = {
+const game3 = {
     name: "The Laughing Crown of Village 9¾",
     start: "start",
     scenes: {
