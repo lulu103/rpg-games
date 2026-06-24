@@ -2,49 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Text RPG</title>
+    <title>Text RPG Collection</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div id="menu">
-    <h1>Text RPG Collection</h1>
-
-    <button onclick="loadGame(1)">
-        Game 1 - The Lost Sword
-    </button>
-
-    <button onclick="loadGame(2)">
-        Game 2
-    </button>
-
-    <button onclick="loadGame(3)">
-        Game 3
-    </button>
-
-    <button onclick="continueGame()">
-        Continue
-    </button>
-</div>
-
-<div id="game" style="display:none;">
-    <h2 id="gameTitle"></h2>
-
-    <div id="text"></div>
-
-    <div id="choices"></div>
-
-    <hr>
-
-    <button onclick="backToMenu()">
-        Main Menu
-    </button>
-</div>
+<div id="app"></div>
 
 <script src="game1.js"></script>
 <script src="game2.js"></script>
 <script src="game3.js"></script>
 <script src="engine.js"></script>
+
+<script>
+    RPG.launch();
+</script>
 
 </body>
 </html>
