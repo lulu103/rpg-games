@@ -1,45 +1,127 @@
-class RPGEngine {
-    constructor(gameData) {
-        this.game = gameData;
-        this.scene = gameData.start;
-    }
+const RPG = {
 
-    start() {
-        this.showScene(this.scene);
-    }
+    games: {
+        1: game1,
+        2: game2,
+        3: game3
+    },
 
-    showScene(id) {
-        this.scene = id;
+    currentGame: null,
+    currentScene: null,
 
-        const scene = this.game.scenes[id];
+    launch() {
+        this.showMenu();
+    },
 
-        document.getElementById("text").innerHTML =
-            scene.text;
+    showMenu() {
+        const app = document.getElementById("app");
 
-        const choices =
-            document.getElementById("choices");
+        let html = `
+            <h1>Text RPG Collection</h1>
+        `;
 
-        choices.innerHTML = "";
+        for (const id in this.games) {
+            html += `
+                <button onclick="RPG.start(${id})">
+                    ${this.games[id].name}
+                </button>
+            `;
+        }
+
+        html += `
+            <button onclick="RPG.continueGame()">
+                Continue
+            </button>
+        `;
+
+        app.innerHTML = html;
+    },
+
+    start(id) {
+        this.currentGame = this.games[id];
+        this.currentScene = this.currentGame.start;
+        this.render();
+    },
+
+    render() {
+        const scene =
+            this.currentGame.scenes[this.currentScene];
+
+        const app =
+            document.getElementById("app");
+
+        let html = `
+            <h2>${this.currentGame.name}</h2>
+            <div id="text">
+                ${scene.text}
+            </div>
+        `;
 
         scene.choices.forEach(choice => {
-            const button =
-                document.createElement("button");
-
-            button.innerText = choice.text;
-
-            button.onclick = () => {
-                this.showScene(choice.next);
-            };
-
-            choices.appendChild(button);
+            html += `
+                <button
+                    onclick="RPG.choose('${choice.next}')">
+                    ${choice.text}
+                </button>
+            `;
         });
 
+        html += `
+            <hr>
+            <button onclick="RPG.showMenu()">
+                Main Menu
+            </button>
+        `;
+
+        app.innerHTML = html;
+
+        this.save();
+    },
+
+    choose(nextScene) {
+        this.currentScene = nextScene;
+        this.render();
+    },
+
+    save() {
+        const gameId =
+            Number(
+                Object.keys(this.games)
+                    .find(
+                        k =>
+                            this.games[k] ===
+                            this.currentGame
+                    )
+            );
+
         localStorage.setItem(
-            "save",
+            "rpg-save",
             JSON.stringify({
-                game: this.game.name,
-                scene: this.scene
+                game: gameId,
+                scene: this.currentScene
             })
         );
+    },
+
+    continueGame() {
+        const save =
+            JSON.parse(
+                localStorage.getItem(
+                    "rpg-save"
+                )
+            );
+
+        if (!save) {
+            alert("No save found.");
+            return;
+        }
+
+        this.currentGame =
+            this.games[save.game];
+
+        this.currentScene =
+            save.scene;
+
+        this.render();
     }
-}
+};
