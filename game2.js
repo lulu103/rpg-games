@@ -1,4 +1,4 @@
-window.game2 = {
+const game2 = {
     name: "The Cursed Kingdom",
 
     start: "start",
