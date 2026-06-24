@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Text RPG</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="menu">
+    <h1>Text RPG Collection</h1>
+
+    <button onclick="loadGame(1)">
+        Game 1 - The Lost Sword
+    </button>
+
+    <button onclick="loadGame(2)">
+        Game 2 - Coming Soon
+    </button>
+
+    <button onclick="loadGame(3)">
+        Game 3 - Coming Soon
+    </button>
+
+    <button onclick="continueGame()">
+        Continue Save
+    </button>
+</div>
+
+<div id="game" style="display:none;">
+    <h2 id="gameTitle"></h2>
+
+    <div id="text"></div>
+
+    <div id="choices"></div>
+
+    <hr>
+
+    <button onclick="backToMenu()">
+        Main Menu
+    </button>
+</div>
+
+<script src="games/game1.js"></script>
+<script src="games/game2.js"></script>
+<script src="games/game3.js"></script>
+<script src="engine.js"></script>
+
+</body>
+</html>
